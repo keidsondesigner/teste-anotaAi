@@ -10,4 +10,8 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'teste-anotaAi';
+
+  sum(a: number, b: number): number {
+    return a + b;
+  }
 }
