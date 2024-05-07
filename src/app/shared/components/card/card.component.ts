@@ -14,7 +14,7 @@ export class CardComponent {
   @Input() product: Product = {
     description: '',
     id: 0,
-    img: "",
+    img: '',
     title: '',
     type: ''
   };

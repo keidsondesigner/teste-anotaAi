@@ -1,24 +1,25 @@
-<section class="search-container">
-  <div class="search-content">
+<section class="container-search">
+  <div class="container-search__content">
     <input
+      class="container-search__content-input-search"
       type="search"
       id="search"
       placeholder="Pesquisar..."
       (keyup)="onSearchTermChange($event)"
       (search)="onSearchTermChange($event)"
     />
-    <span class="icon">
-      <img :src="/assets/icons/search.svg" alt="">
+    <span class="container-search__content-icon">
+      <img :src="/assets/icons/search.svg" alt="icon search">
     </span>
   </div>
 </section>
-<section class="card-container">
-  <div class="card-content">
+<section class="container-card">
+  <div class="content-card">
     @for(product of filteredProducts$ | async; track product.id) {
       @defer (on immediate) {
         <app-card
           [product]="product"
-          (onDelete)="handleOnEdit(product.id)"
+          (onDelete)="handleOnDelete(product.id)"
         />
       }
     }

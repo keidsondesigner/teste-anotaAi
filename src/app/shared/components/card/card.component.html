@@ -1,9 +1,9 @@
-<figure class="card">
-  <img class="card__image" [src]="product.img" [alt]="product.title">
-  <span class="card__type">{{ product.type }}</span>
-  <figcaption class="card__content">
-    <h2 class="card__title">{{ product.title }}</h2>
-    <p class="card__description">{{ product.description }}</p>
+<figure class="container-card">
+  <img class="container-card__image" [src]="product.img" [alt]="product.title">
+  <span class="container-card__type type-{{ product.type }}">{{ product.type }}</span>
+  <figcaption class="container-card__content">
+    <h3 class="container-card__content-title">{{ product.title }}</h3>
+    <p class="container-card__content-description">{{ product.description }}</p>
   </figcaption>
-  <button class="card__button" (click)="onDelete.emit()"></button>
+  <button class="container-card__content-button" (click)="onDelete.emit()"></button>
 </figure>
