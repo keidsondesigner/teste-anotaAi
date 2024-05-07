@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { CardComponent } from '../../shared/components/card/card.component';
-import { ProductsService } from '../../shared/services/products.service';
+import { CardComponent } from '../../../shared/components/card/card.component';
+import { ProductsService } from '../../../shared/services/products.service';
 import { Observable, Subject, debounceTime, of, takeUntil } from 'rxjs';
-import { Product } from '../../models/product.model';
+import { Product } from '../../../models/product.model';
 import { FormsModule } from '@angular/forms';
 import { AsyncPipe } from '@angular/common';
 
