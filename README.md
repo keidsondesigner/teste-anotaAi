@@ -3,8 +3,9 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.4.
 
 ## Development server
+Run `npm install` command for installing project dependencies.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Run `npm run dev` ou `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
 ## Build
 
@@ -22,39 +23,39 @@ To generate test coverage reports, use `npm run test:coverage`.
 
 This project uses Node.js version 20.11.0.
 
-## Conhecendo a estrutura do projeto
+## Understanding the Project Structure
 
-- `coverage` é a pasta onde ficam armazenados os arquivos gerados ao realizar os testes unitários do projeto;
-- `dist` é a pasta onde ficam armazenados os arquivos gerados ao compilar o projeto e que serão usados para a implantação do projeto após o build;
-- `node_modules` é a pasta responsável por armazenar as nossas bibliotecas, quando nós adicionamos algo no nosso projeto com o comando `npm` ele modifica o arquivo `package.json` e gerencia os pacotes e as suas versões dentro desse diretório;
-- `src` é a pasta principal do nosso projeto, visto que, ele é o diretório da nossa aplicação. É nesta pasta que literalmente contém tudo pertinente a criação da aplicação, como components, modules, services, directives, imagens, ícones, configuração de ambiente, etc.;
-  - `src\app` contém toda estrutura de pastas para desenvolvimento da aplicação.
-    - `shared` nela ficam todos os components que são compartilhaveis, ou seja, reutilizáveis em toda a aplicação.
-      - `components` esta pasta contém os components que são utilizados como páginas/telas.
-        - Dentro de cada componente existem os seguintes arquivos/pastas:
-          - `.html`: contém o HTML para construção da tela;
-          - `.scss`: é o arquivo de estilo para customização do layout da tela;
-          - `.spec.ts`: arquivo de teste do componente;
-          - `.ts`: é o arquivo de classe do componente, onde é feito as funções dos botões, ações e interações que a tela vai possuir.
-    - `core` nela contém os components que são utilizados em todo momento na aplicação. Ex.: cabeçalho e rodapé.
-    - `enums` contempla os enumeradores que são usados na aplicação. Ex.: endpoints, mensagens, etc.
-    - `models` ficam armazenado todos os modelos que podem possuir seus valores como atributos, métodos.
-    - `services` ficam localizados os arquivos de serviços, que são responsáveis por devolver determinadas informações, seja ela fornecida por uma API ou alguma lógica de negócio interna no front-end.
-    - `utils` são arquivos que dentro possuem funções úteis e reutilizavéis dentro da aplicação.
-    - `app-routes.ts` contém as rotas das telas.
-    - `app.config.ts` é o modulo principal do projeto, nele ficam as importações principais para funcionamento da aplicação como rotas, configuração do NgRx, local storage, importação de módulos filhos, etc.
-  - `src\assets` esta pasta permite trabalhar com arquivos extras a nossa aplicação, como imagens, ícones, fontes, etc. Esse diretório é configurado dentro do nosso arquivo `angular.json`, caso queira alterar ele para um outra pasta ou incluir mais, basta ir até arquivo `angular.json` e informar o nome do novo diretório.
-  - `src\environments` nesta pasta temos dois arquivos .ts, um para o nosso ambiente de produção e um outro para o nosso ambiente de desenvolvimento. Nele nós podemos definir constantes "globais" em toda a aplicação.
-  - `favicon.ico` é uma pequena imagem que fica guardada no site para visualização pelo navegador. Geralmente são utilizados como logotipos em tamanho reduzido, nos sites de empresas, entidades e marcas quaisquer. Ele é aquele icone pequeno que fica ao lado do nome da página nos Browsers.
-  - `index.html` esse seria o nosso arquivo html que é exibido no Browser, dentro dele rodamos a nossa SPA (Single Page Application).
-  - `main.ts` esse é o arquivo principal da nossa Solution. Ele vem definido dentro do nosso arquivo angular.json, esse seria o arquivo que chama todos os outros arquivos e faz a nossa aplicação funcionar.
-  - `setup.jest.ts` é responsavel por realizar testes na aplicação.
-  - `styles.css` como em todos os nossos componentes tem o seu próprio arquivo .css, nós podemos utilizar esse arquivo para criar algo global como classes css gerais para nossa aplicação.
-- `.editorconfig`: são configurações expecificas da IDE que está sendo usada.
-- `.gitignore`: arquivo do git para gerenciarmos os arquivos que serão ignorados no momento do nosso commit.
-- `angular.json`: é onde fica armazenada todas as configurações do angular e do projeto.
-- `jest.config.js`: o Jest é uma biblioteca utilizada para criação de testes unitários no Angular.
-- `package-lock.json`: serve para descrever as características das dependências usadas no projeto. Versão, subdependências, links de verificação de integridade, dentre outras coisas.
-- `package.json`: esse arquivo é o responsável por gerenciar as dependências do nosso projeto, quando nós executamos o comando `npm install`, ele verifica os pacotes que estão dentro desse arquivo e baixa para o nosso diretório `node_modules` conforme visto anteriormente.
-- `README.md`: arquivo Markdown para documentação da nossa aplicação (este que você está lendo 😊).
-- `tsconfig.app.json, tsconfig.spec.json e tsconfig.json`: são os nossos arquivos de configuração do TypeScript.
+- `coverage` is the folder where the files generated from running the project's unit tests are stored;
+- `dist` is the folder where the files generated from compiling the project are stored and will be used for project deployment after building;
+- `node_modules` is the folder responsible for storing our libraries. When we add something to our project using the `npm` command, it modifies the `package.json` file and manages the packages and their versions within this directory;
+- `src` is the main folder of our project, as it is the directory of our application. It is in this folder that literally everything relevant to the creation of the application is contained, such as components, modules, services, directives, images, icons, environment configuration, etc.;
+  - `src\app` contains the entire folder structure for developing the application.
+    - `shared` contains all the components that are shareable, meaning they are reusable throughout the application.
+      - `components` This folder contains components used as pages/screens.
+        - Within each component, there are the following files/folders:
+          - `.html`: contains the HTML for building the screen;
+          - `.scss`: is the style file for customizing the screen layout;
+          - `.spec.ts`: component test file;
+          - `.ts`: is the component class file, where button functions, actions, and interactions that the screen will have are implemented.
+    - `core` contains components that are used at all times in the application. For example: header and footer.
+    - `enums` contains enumerators used in the application. For example: endpoints, messages, etc.
+    - `models` stores all models that can have their values as attributes, methods.
+    - `services` contains service files, which are responsible for returning certain information, whether provided by an API or some internal business logic on the frontend.
+    - `utils` are files that contain useful and reusable functions within the application.
+    - `app-routes.ts` contains the screen routes.
+    - `app.config.ts` is the main module of the project, containing the main imports for the application to work, such as routes, NgRx configuration, local storage, importation of child modules, etc.
+  - `src\assets` This folder allows working with extra files for our application, such as images, icons, fonts, etc. This directory is configured within our `angular.json` file. If you want to change it to another folder or add more, just go to the `angular.json` file and specify the name of the new directory.
+  - `src\environments` In this folder, we have two .ts files, one for our production environment and another for our development environment. Here we can define "global" constants throughout the application.
+  - `favicon.ico` is a small image stored on the website for viewing by the browser. They are usually used as logos in reduced size on the websites of companies, entities, and any brands. It's the small icon next to the page name in browsers.
+  - `index.html` this would be our html file displayed in the browser, within it we run our SPA (Single Page Application).
+  - `main.ts` this is the main file of our solution. It is defined within our angular.json file. This would be the file that calls all the other files and makes our application work.
+  - `setup.jest.ts` is responsible for performing tests on the application.
+  - `styles.css` just as each of our components has its own .css file, we can use this file to create something global like general CSS classes for our application.
+- `.editorconfig`: these are specific settings of the IDE being used.
+- `.gitignore`: git file to manage the files that will be ignored at the time of our commit.
+- `angular.json`: this is where all angular and project settings are stored.
+- `jest.config.js`: Jest is a library used for creating unit tests in Angular.
+- `package-lock.json`: describes the characteristics of the dependencies used in the project. Version, sub-dependencies, integrity check links, among other things.
+- `package.json`: this file is responsible for managing the dependencies of our project. When we run the `npm install` command, it checks the packages inside this file and downloads them to our `node_modules` directory as seen before.
+- `README.md`: Markdown file for documentation of our application (this one you are reading 😊).
+- `tsconfig.app.json`, `tsconfig.spec.json`, and `tsconfig.json`: these are our TypeScript configuration files.
