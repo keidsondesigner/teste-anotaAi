@@ -9,7 +9,7 @@ import { normalizeString } from '../utils/normalize-utils';
   providedIn: 'root'
 })
 export class ProductsService {
-  protected baseUrl = environment.apiUrl;
+  baseUrl = environment.apiUrl;
 
   private productsSubject = new BehaviorSubject<Product[]>([]);
   products$: Observable<Product[]> = this.productsSubject.asObservable();
@@ -44,5 +44,15 @@ export class ProductsService {
 
   getAll() {
     return this.httpClient.get<Product[]>(`${this.baseUrl}`);
+  }
+
+  deleteProduct(productId: number) {
+    this.products$ = this.products$.pipe(
+      map(products => {
+        return products.filter(product =>
+          product.id !== productId
+        );
+      })
+    );
   }
 }
