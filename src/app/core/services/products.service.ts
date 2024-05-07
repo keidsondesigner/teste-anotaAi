@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { BehaviorSubject, Observable, catchError, map, of, shareReplay } from 'rxjs';
-import { Product } from '../../models/product.model';
+import { Product } from '../models/product.model';
 import { normalizeString } from '../utils/normalize-utils';
 
 @Injectable({

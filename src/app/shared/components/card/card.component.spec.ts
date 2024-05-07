@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CardComponent } from './card.component';
-import { productAMock } from '../../../mocks/product.mock';
+import { productAMock } from '../../../core/mocks/product.mock';
 
 describe('CardComponent', () => {
   let component: CardComponent;

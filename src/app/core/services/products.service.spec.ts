@@ -2,8 +2,8 @@ import { TestBed } from '@angular/core/testing';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { ProductsService } from './products.service';
-import { Product } from '../../models/product.model';
-import { mockProducts } from '../../mocks/product.mock';
+import { Product } from '../models/product.model';
+import { mockProducts } from '../mocks/product.mock';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 

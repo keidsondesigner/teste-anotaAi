@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { CardComponent } from '../../../shared/components/card/card.component';
-import { ProductsService } from '../../../shared/services/products.service';
+import { ProductsService } from '../../../core/services/products.service';
 import { Observable, Subject, debounceTime, map, of, takeUntil } from 'rxjs';
-import { Product } from '../../../models/product.model';
+import { Product } from '../../../core/models/product.model';
 import { FormsModule } from '@angular/forms';
 import { AsyncPipe } from '@angular/common';
-import { TypeLabel } from '../../../shared/enums/types';
+import { TypeLabel } from '../../../core/enums/types';
 
 @Component({
   selector: 'app-list',

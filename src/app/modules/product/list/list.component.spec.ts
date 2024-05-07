@@ -3,11 +3,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ListComponent } from './list.component';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map, of } from 'rxjs';
-import { mockProducts } from '../../../mocks/product.mock';
+import { mockProducts } from '../../../core/mocks/product.mock';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ProductsService } from '../../../shared/services/products.service';
-import { normalizeString } from '../../../shared/utils/normalize-utils';
-import { Product } from '../../../models/product.model';
+import { ProductsService } from '../../../core/services/products.service';
+import { normalizeString } from '../../../core/utils/normalize-utils';
+import { Product } from '../../../core/models/product.model';
 
 describe('ListComponent', () => {
   let component: ListComponent;
