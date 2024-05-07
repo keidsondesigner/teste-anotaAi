@@ -1,0 +1,9 @@
+<figure class="card">
+  <img class="card__image" [src]="product.img" [alt]="product.title">
+  <span class="card__type">{{ product.type }}</span>
+  <figcaption class="card__content">
+    <h2 class="card__title">{{ product.title }}</h2>
+    <p class="card__description">{{ product.description }}</p>
+  </figcaption>
+  <button class="card__button" (click)="onDelete.emit()"></button>
+</figure>
