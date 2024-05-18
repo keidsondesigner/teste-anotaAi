@@ -8,6 +8,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ProductsService } from '../../../core/services/products.service';
 import { normalizeString } from '../../../core/utils/normalize-utils';
 import { Product } from '../../../core/models/product.model';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('ListComponent', () => {
   let component: ListComponent;
@@ -17,7 +18,7 @@ describe('ListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ListComponent, HttpClientTestingModule],
+      imports: [ListComponent, HttpClientTestingModule, ReactiveFormsModule],
       providers: [
         HttpClient,
         {
@@ -56,13 +57,18 @@ describe('ListComponent', () => {
 
   it('should search products correctly', done => {
     const searchTerm = 'fatia';
-    component.onSearchTermChange({ target: { value: searchTerm } } as unknown as Event);
+    component.searchField.setValue(searchTerm); // Simulação da entrada do usuário no campo de busca
 
-    component.filteredProducts$.subscribe((products) => {
-      expect(component).toBeTruthy();
-      done();
-    });
-  });
+    setTimeout(() => {
+      component.productsList$.subscribe((products) => {
+        expect(products).toEqual(mockProducts.filter(product => // Verificação se os produtos filtrados estão corretos
+          normalizeString(product.title).includes(normalizeString(searchTerm)) ||
+          normalizeString(product.description).includes(normalizeString(searchTerm))
+        ));
+        done();
+      });
+    }, 600);
+  }, 15000);
 
   it('should call deleteProduct correctly', () => {
     const spy = jest.spyOn(service, 'deleteProduct');

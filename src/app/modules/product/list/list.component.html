@@ -5,8 +5,7 @@
       type="search"
       id="search"
       placeholder="Pesquisar..."
-      (keyup)="onSearchTermChange($event)"
-      (search)="onSearchTermChange($event)"
+      [formControl]="searchField"
     />
     <span class="container-search__content-icon">
       <img :src="/assets/icons/search.svg" alt="icon search">
@@ -15,7 +14,7 @@
 </section>
 <section class="container-card">
   <div class="content-card">
-    @for(product of filteredProducts$ | async; track product.id) {
+    @for(product of productsList$ | async; track product.id) {
       @defer (on immediate) {
         <app-card
           [product]="product"
