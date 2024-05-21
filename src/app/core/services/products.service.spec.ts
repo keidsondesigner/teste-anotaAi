@@ -6,6 +6,7 @@ import { Product } from '../models/product.model';
 import { mockProducts } from '../mocks/product.mock';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
+import { TypeLabel } from '../enums/types';
 
 describe('ProductsService', () => {
   let service: ProductsService;
@@ -23,27 +24,50 @@ describe('ProductsService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get all products', done => {
-    let result: Product[] = [];
-    jest.spyOn(httpClient, 'get').mockReturnValue(of(mockProducts))
+  it('should load and transform products correctly', done => {
+    const transformedProducts = mockProducts.map(product => ({
+      ...product,
+      type: TypeLabel.get(product.type) || '',
+    }));
 
-    service.getAll().subscribe((products) => {
-      result = products;
-      expect(result).toEqual(mockProducts);
+    jest.spyOn(httpClient, 'get').mockReturnValue(of(mockProducts));
+
+    service.getTransformedProducts().subscribe((products) => {
+      expect(products).toEqual(transformedProducts);
       done();
     });
   });
 
-  it('should return products correctly', done => {
-    const mockTerm = 'pizza';
-    let result: Product[] = [];
+  it('should search and transform products correctly', done => {
+    const searchTerm = 'pizza';
+    const transformedProducts = mockProducts.map(product => ({
+      ...product,
+      type: TypeLabel.get(product.type) || '',
+    }));
 
     service.products$ = of(mockProducts);
 
-    service.searchProducts(mockTerm).subscribe((products) => {
-      result = products;
-      expect(result.length).toEqual(2);
+    service.searchAndTransformProducts(searchTerm).subscribe((products) => {
+      const expectedProducts = transformedProducts.filter(product =>
+        product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.description.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      expect(products).toEqual(expectedProducts);
       done();
     });
   });
+
+  it('should call deleteProduct correctly', done => {
+    const productIdToDelete = 1;
+    const updatedProducts = mockProducts.filter(product => product.id !== productIdToDelete);
+
+    service.products$ = of(mockProducts);
+    service.deleteProduct(productIdToDelete);
+
+    service.products$.subscribe((products) => {
+      expect(products).toEqual(updatedProducts);
+      done();
+    });
+  });
+
 });

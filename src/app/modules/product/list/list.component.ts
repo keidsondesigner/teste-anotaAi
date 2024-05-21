@@ -5,15 +5,12 @@ import {
   Observable,
   Subject,
   debounceTime,
-  map,
-  of,
+  startWith,
   switchMap,
-  takeUntil,
 } from 'rxjs';
 import { Product } from '../../../core/models/product.model';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AsyncPipe } from '@angular/common';
-import { TypeLabel } from '../../../core/enums/types';
 
 @Component({
   selector: 'app-list',
@@ -24,49 +21,21 @@ import { TypeLabel } from '../../../core/enums/types';
 })
 export class ListComponent {
   productsList$: Observable<Product[]> = new Observable<Product[]>();
+  searchField = new FormControl();
   private unsubscribe$ = new Subject<void>();
 
-  searchField = new FormControl();
-
-  constructor(private productsService: ProductsService) {
-    this.loadProducts();
-  }
+  constructor(private productsService: ProductsService) {}
 
   ngOnInit(): void {
-    this.searchField.valueChanges
-      .pipe(
-        debounceTime(500),
-        switchMap((searchTerm) =>
-          this.productsService.searchProducts(searchTerm)
-        ),
-        map((products) => {
-          return products.map((product) => {
-            const typeLabel = TypeLabel.get(product.type);
-            return {
-              ...product,
-              type: typeLabel!,
-            };
-          });
-        }),
-        takeUntil(this.unsubscribe$)
-      )
-      .subscribe((productsList) => {
-        this.productsList$ = of(productsList);
-      });
+    this.productsList$ = this.searchField.valueChanges.pipe(
+      startWith(''), // Isso vai iniciar o fluxo com uma string vazia, carregando todos os produtos inicialmente
+      debounceTime(500),
+      switchMap(searchTerm => this.productsService.searchAndTransformProducts(searchTerm)),
+    );
   }
 
   loadProducts() {
-    this.productsList$ = this.productsService.products$.pipe(
-      map((products) => {
-        return products.map((product) => {
-          const typeLabel = TypeLabel.get(product.type);
-          return {
-            ...product,
-            type: typeLabel ? typeLabel : '',
-          };
-        });
-      })
-    );
+    this.productsList$ = this.productsService.getTransformedProducts();
   }
 
   handleOnDelete(id: number) {

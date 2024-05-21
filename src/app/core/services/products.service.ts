@@ -4,13 +4,13 @@ import { environment } from '../../../environments/environment.development';
 import { BehaviorSubject, Observable, catchError, map, of, shareReplay } from 'rxjs';
 import { Product } from '../models/product.model';
 import { normalizeString } from '../utils/normalize-utils';
+import { TypeLabel } from '../enums/types';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
   baseUrl = environment.apiUrl;
-
   private productsSubject = new BehaviorSubject<Product[]>([]);
   products$: Observable<Product[]> = this.productsSubject.asObservable();
 
@@ -30,29 +30,38 @@ export class ProductsService {
     });
   }
 
-  searchProducts(searchTerm: string): Observable<Product[]> {
+  private transformProducts(products: Product[]): Product[] {
+    return products.map(product => {
+      const typeLabel = TypeLabel.get(product.type);
+      return {
+        ...product,
+        type: typeLabel ? typeLabel : '',
+      };
+    });
+  }
+
+  getTransformedProducts(): Observable<Product[]> {
+    return this.products$.pipe(
+      map(products => this.transformProducts(products))
+    );
+  }
+
+  searchAndTransformProducts(searchTerm: string): Observable<Product[]> {
     return this.products$.pipe(
       map(products => {
         const normalizedSearchTerm = normalizeString(searchTerm);
-        return products.filter(product =>
+        const filteredProducts = products.filter(product =>
           normalizeString(product.title).includes(normalizedSearchTerm) ||
           normalizeString(product.description).includes(normalizedSearchTerm)
         );
+        return this.transformProducts(filteredProducts);
       })
     );
-  }
-
-  getAll() {
-    return this.httpClient.get<Product[]>(`${this.baseUrl}`);
   }
 
   deleteProduct(productId: number) {
-    this.products$ = this.products$.pipe(
-      map(products => {
-        return products.filter(product =>
-          product.id !== productId
-        );
-      })
-    );
+    this.products$.pipe(
+      map(products => products.filter(product => product.id !== productId))
+    ).subscribe(updatedProducts => this.productsSubject.next(updatedProducts));
   }
 }
