@@ -49,9 +49,10 @@ export class ProductsService  {
     );
   }
 
-  deleteProduct(productId: number) {
-    this.products$.pipe(
-      map(products => products.filter(product => product.id !== productId))
-    ).subscribe(updatedProducts => this.productsSubject.next(updatedProducts));
+  deleteProduct(productId: number): void {
+    const currentProducts = this.productsSubject.getValue(); // Obtém os produtos atuais
+    const updatedProducts = currentProducts.filter((product: Product) => product.id !== productId); // Filtra o produto a ser excluído
+    this.productsSubject.next(updatedProducts); // Atualiza o productsSubject sem criar ciclo
   }
+
 }
