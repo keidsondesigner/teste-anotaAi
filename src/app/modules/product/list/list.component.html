@@ -5,29 +5,32 @@
       type="search"
       id="search"
       placeholder="Pesquisar..."
-      [formControl]="searchField"
+      [formControl]="searchTerm"
+      aria-label="Pesquisar produtos"
     />
     <span class="container-search__content-icon">
-      <img :src="/assets/icons/search.svg" alt="icon search">
+      <img src="/assets/icons/search.svg" alt="Ícone de pesquisa">
     </span>
   </div>
 </section>
+
 <section class="container-card">
   <div class="content-card">
-    @for(product of productsList$ | async; track product.id) {
-      @defer (on immediate) {
-        <app-card
-          [product]="product"
-          (onDelete)="handleOnDelete(product.id)"
-        />
+    @if (filteredProducts$ | async; as products) {
+      @if (products.length) {
+        @for(product of products; track product.id) {
+          @defer (on immediate) {
+            <app-card
+              [product]="product"
+              (onDelete)="handleOnDelete(product.id)"
+            />
+          }
+        }
+      } @else {
+        <p>Nenhum produto encontrado para a busca realizada</p>
       }
-    }
-    @empty {
-      @defer (on immediate) {
-        <p>Nenhum produto cadastrado :(</p>
-      }
+    } @else {
+      <p>Carregando produtos...</p>
     }
   </div>
 </section>
-
-
